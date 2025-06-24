@@ -12,7 +12,7 @@ const props = defineProps({
 
 const cardClass = computed(() => ({
   'card': true,
-  'is-hidden': !props.isVisible,
+  'hidden': !props.isVisible,
 }));
 </script>
 
@@ -43,7 +43,7 @@ const cardClass = computed(() => ({
   transform: translateY(0);
 }
 
-.card.is-hidden {
+.card.hidden {
   opacity: 0;
   pointer-events: none;
   transform: translateX(20px) translateY(20px);
