@@ -22,10 +22,10 @@
 }
 
 .ball:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
 }
 
 .ball:active {
-  transform: scale(0.9);
+  transform: scale(0.99);
 }
 </style>

@@ -1,7 +1,5 @@
 <script setup>
 import Button from './Button.vue';
-
-defineProps({});
 </script>
 
 <template>

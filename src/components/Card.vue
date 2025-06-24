@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import Chat from './Chat.vue';
+import Content from './Content.vue';
 import Menu from './Menu.vue';
 
 const props = defineProps({
@@ -18,7 +18,7 @@ const cardClass = computed(() => ({
 
 <template>
   <div :class="cardClass">
-    <Chat />
+    <Content />
     <Menu />
   </div>
 </template>

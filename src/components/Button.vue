@@ -1,7 +1,3 @@
-<script setup>
-defineProps({});
-</script>
-
 <template>
   <button class="button">
     <slot />
@@ -16,21 +12,26 @@ defineProps({});
   align-items: center;
   justify-content: center;
   background-color: rgba(50, 50, 50, 0.5);
+  border: none;
   border-radius: 8px;
   font-size: 24px;
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-.button > svg {
+
+.button>i {
   width: 28px;
   height: 28px;
+}
+
+.button:hover {
+  transform: scale(1.01);
+  background-color: rgba(50, 50, 50, 0.8);
   color: rgba(255, 255, 255, 1);
 }
-.button:hover {
-  transform: scale(1.1);
-}
+
 .button:active {
-  transform: scale(0.9);
+  transform: scale(0.99);
 }
 </style>

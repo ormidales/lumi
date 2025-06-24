@@ -1,7 +1,5 @@
 <script setup>
 import Button from './Button.vue';
-
-defineProps({});
 </script>
 
 <template>
@@ -9,13 +7,12 @@ defineProps({});
     <div class="header">
       <span class="documents">Documents</span>
       <small>/</small>
-      <span>Première conversation</span>
+      Première conversation
     </div>
     <div class="body"></div>
     <div class="footer">
       <textarea>
-Bonjour, je voudrais que tu me créer un document avec les informations suivantes ... </textarea
-      >
+Bonjour, je voudrais que tu me créer un document avec les informations suivantes ... </textarea>
       <Button>
         <i class="bi bi-send"></i>
       </Button>
@@ -25,52 +22,56 @@ Bonjour, je voudrais que tu me créer un document avec les informations suivante
 
 <style scoped>
 .chat {
-  grid-column: span 7;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
   border-radius: 8px;
 }
+
 .header {
-  height: 2%;
+  height: 15px;
   padding: 8px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 4px;
+  gap: 8px;
   background-color: rgba(50, 50, 50, 0.5);
   border-radius: 8px;
-}
-.header > span {
-  margin: 0;
   font-size: 10px;
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
 }
-.header > span.documents {
-  color: rgba(70, 220, 40, 1) !important;
-  font-weight: 600;
+.header>span {
+  padding: 1px 2px;
+  border-radius: 4px;
 }
-.header > small {
-  margin: 0;
+.header>span.documents {
+  background-color: rgba(70, 220, 40, 1);
+}
+
+.header>small {
   font-size: 8px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.5);
 }
+
 .body {
-  height: 80%;
+  height: 475px;
   padding: 8px;
   background-color: rgba(50, 50, 50, 0.5);
   border-radius: 8px;
 }
+
 .footer {
-  height: 10%;
+  height: 50px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 8px;
   border-radius: 8px;
 }
-.footer > textarea {
+
+.footer>textarea {
   grid-column: span 6;
   padding: 8px;
   background-color: rgba(50, 50, 50, 0.5);
