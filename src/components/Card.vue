@@ -1,12 +1,23 @@
 <script setup>
+import { computed } from 'vue';
 import Chat from './Chat.vue';
 import Menu from './Menu.vue';
 
-defineProps({});
+const props = defineProps({
+  isVisible: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+const cardClass = computed(() => ({
+  'card': true,
+  'is-hidden': !props.isVisible,
+}));
 </script>
 
 <template>
-  <div class="card">
+  <div :class="cardClass">
     <Chat />
     <Menu />
   </div>
@@ -27,5 +38,14 @@ defineProps({});
   background-color: rgba(50, 50, 50, 0.4);
   backdrop-filter: blur(10px);
   border-radius: 16px;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20px) translateY(20px);
 }
 </style>

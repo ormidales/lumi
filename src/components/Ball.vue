@@ -1,7 +1,3 @@
-<script setup>
-defineProps({});
-</script>
-
 <template>
   <div class="ball">✨</div>
 </template>
@@ -22,11 +18,13 @@ defineProps({});
   border-radius: 16px;
   font-size: 48px;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
+
 .ball:hover {
   transform: scale(1.1);
 }
+
 .ball:active {
   transform: scale(0.9);
 }

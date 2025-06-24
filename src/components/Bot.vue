@@ -1,11 +1,16 @@
 <script setup>
+import { ref } from 'vue';
 import Ball from './Ball.vue';
 import Card from './Card.vue';
 
-defineProps({});
+const isCardVisible = ref(true);
+
+const toggleCardVisibility = () => {
+  isCardVisible.value = !isCardVisible.value;
+};
 </script>
 
 <template>
-  <Ball />
-  <Card />
+  <Ball @click="toggleCardVisibility" />
+  <Card :isVisible="isCardVisible" />
 </template>

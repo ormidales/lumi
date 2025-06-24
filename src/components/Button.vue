@@ -20,7 +20,7 @@ defineProps({});
   font-size: 24px;
   color: white;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .button > svg {
   width: 28px;
