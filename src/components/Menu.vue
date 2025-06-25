@@ -19,9 +19,6 @@ import Button from './Button.vue';
       <Button>
         <i class="bi bi-gear"></i>
       </Button>
-      <Button>
-        <i class="bi bi-person"></i>
-      </Button>
     </div>
   </div>
 </template>
