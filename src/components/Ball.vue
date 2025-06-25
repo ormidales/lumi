@@ -116,7 +116,7 @@ onUnmounted(() => {
           <div class="pupil" :style="eyeStyle"></div>
         </div>
       </div>
-      <div class="mouth"></div>
+      <div class="mouth" :class="{ 'talking': showTooltip }"></div>
     </div>
   </div>
 </template>
@@ -220,6 +220,10 @@ onUnmounted(() => {
   transition: all 0.2s ease-in-out;
 }
 
+.mouth.talking {
+  animation: talk 0.3s infinite ease-in-out;
+}
+
 @keyframes blink {
 
   0%,
@@ -230,6 +234,20 @@ onUnmounted(() => {
 
   95% {
     transform: scaleY(0.1);
+  }
+}
+
+@keyframes talk {
+
+  0%,
+  100% {
+    height: 5px;
+    border-radius: 0 0 15px 15px;
+  }
+
+  50% {
+    height: 12px;
+    border-radius: 8px 8px 5px 5px;
   }
 }
 </style>
