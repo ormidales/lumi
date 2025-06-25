@@ -70,7 +70,7 @@
 }
 
 .list>div>span.documents {
-    background-color: rgba(70, 220, 40, 1);
+    background-color: rgba(48, 137, 44, 1);
 }
 
 .list>div>span.plaintes {

@@ -27,6 +27,7 @@
 }
 
 .ball:hover {
+  background-color: rgba(50, 50, 50, 0.8);
   transform: scale(1.1);
 }
 
