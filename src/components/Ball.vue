@@ -1,14 +1,29 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 
 const props = defineProps({
   isCardHovered: {
     type: Boolean,
     default: false,
   },
+  isCardVisible: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const eyeStyle = ref({});
+const tooltipMessage = ref('');
+const showTooltip = ref(false);
+let tooltipInterval = null;
+
+const messages = [
+  "Psst, cliquez sur moi !",
+  "Je peux vous aider ?",
+  "Vous cherchez quelque chose ?",
+  "J'ai plein d'infos pour vous.",
+  "N'hésitez pas à me solliciter.",
+];
 
 const moveEyes = (event) => {
   if (props.isCardHovered) return;
@@ -36,6 +51,33 @@ const resetEyes = () => {
   };
 };
 
+const startTooltipCycle = () => {
+  if (tooltipInterval) clearInterval(tooltipInterval);
+
+  let currentIndex = -1;
+
+  const showNextMessage = () => {
+    currentIndex = (currentIndex + 1) % messages.length;
+    tooltipMessage.value = messages[currentIndex];
+    showTooltip.value = true;
+
+    setTimeout(() => {
+      showTooltip.value = false;
+    }, 5000);
+  };
+
+  showNextMessage();
+  tooltipInterval = setInterval(showNextMessage, 10000);
+};
+
+const stopTooltipCycle = () => {
+  if (tooltipInterval) {
+    clearInterval(tooltipInterval);
+    tooltipInterval = null;
+  }
+  showTooltip.value = false;
+};
+
 watch(() => props.isCardHovered, (isHovering) => {
   if (isHovering) {
     eyeStyle.value = {
@@ -46,30 +88,86 @@ watch(() => props.isCardHovered, (isHovering) => {
     resetEyes();
   }
 });
+
+watch(() => props.isCardVisible, (isVisible) => {
+  if (isVisible) {
+    stopTooltipCycle();
+  } else {
+    setTimeout(startTooltipCycle, 2000);
+  }
+}, { immediate: true });
+
+onUnmounted(() => {
+  stopTooltipCycle();
+});
 </script>
 
 <template>
-  <div class="ball" @mousemove="moveEyes" @mouseleave="resetEyes">
-    <div class="eyes">
-      <div class="eye">
-        <div class="pupil" :style="eyeStyle"></div>
-      </div>
-      <div class="eye">
-        <div class="pupil" :style="eyeStyle"></div>
-      </div>
+  <div class="wrapper">
+    <div class="tooltip" :class="{ 'visible': showTooltip }">
+      {{ tooltipMessage }}
     </div>
-    <div class="mouth"></div>
+    <div class="ball" @mousemove="moveEyes" @mouseleave="resetEyes">
+      <div class="eyes">
+        <div class="eye">
+          <div class="pupil" :style="eyeStyle"></div>
+        </div>
+        <div class="eye">
+          <div class="pupil" :style="eyeStyle"></div>
+        </div>
+      </div>
+      <div class="mouth"></div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.ball {
+.wrapper {
   position: absolute;
   bottom: 60px;
   right: 60px;
+  z-index: 8;
   width: 100px;
   height: 100px;
-  z-index: 8;
+}
+
+.tooltip {
+  width: 150px;
+  position: absolute;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  padding: 8px 12px;
+  background-color: rgba(50, 50, 50, 0.8);
+  backdrop-filter: blur(5px);
+  color: rgba(255, 255, 255, 1);
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.tooltip.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(50, 50, 50, 0.8) transparent transparent transparent;
+}
+
+.ball {
+  width: 100px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,6 +177,10 @@ watch(() => props.isCardHovered, (isHovering) => {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+}
+
+.ball:hover {
+  transform: scale(1.1);
 }
 
 .ball:active {
