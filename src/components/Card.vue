@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import Content from './Content.vue';
 import Menu from './Menu.vue';
 
@@ -10,16 +10,22 @@ const props = defineProps({
   },
 });
 
+const activeView = ref('Chat');
+
 const cardClass = computed(() => ({
   'card': true,
   'hidden': !props.isVisible,
 }));
+
+const handleViewChange = (view) => {
+  activeView.value = view;
+};
 </script>
 
 <template>
   <div :class="cardClass">
-    <Content />
-    <Menu />
+    <Content :active-view="activeView" />
+    <Menu @change-view="handleViewChange" />
   </div>
 </template>
 

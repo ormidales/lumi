@@ -1,22 +1,28 @@
 <script setup>
 import Button from './Button.vue';
+
+const emit = defineEmits(['changeView']);
+
+const changeView = (view) => {
+  emit('changeView', view);
+};
 </script>
 
 <template>
   <div class="menu">
     <div>
-      <Button>
+      <Button @click="changeView('Types')">
         <i class="bi bi-plus-lg"></i>
       </Button>
-      <Button>❤️</Button>
-      <Button>🔥</Button>
-      <Button>😂</Button>
-      <Button>
+      <Button @click="changeView('Chat')">❤️</Button>
+      <Button @click="changeView('Chat')">🔥</Button>
+      <Button @click="changeView('Chat')">😂</Button>
+      <Button @click="changeView('List')">
         <i class="bi bi-list"></i>
       </Button>
     </div>
     <div>
-      <Button>
+      <Button @click="changeView('Settings')">
         <i class="bi bi-gear"></i>
       </Button>
     </div>

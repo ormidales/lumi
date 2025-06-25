@@ -52,6 +52,7 @@ const resetEyes = () => {
 };
 
 const startTooltipCycle = () => {
+  if (props.isCardVisible) return;
   if (tooltipInterval) clearInterval(tooltipInterval);
 
   let currentIndex = -1;
