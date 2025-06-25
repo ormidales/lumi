@@ -1,12 +1,16 @@
 <script setup>
+import Types from './Types.vue';
 import Chat from './Chat.vue';
 import List from './List.vue';
+import Settings from './Settings.vue';
 </script>
 
 <template>
     <div class="content">
+        <Types />
         <Chat />
-        <!-- <List /> -->
+        <List />
+        <Settings />
     </div>
 </template>
 
