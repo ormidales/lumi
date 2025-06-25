@@ -42,10 +42,12 @@ Bonjour, je voudrais que tu me créer un document avec les informations suivante
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
 }
+
 .header>span {
   padding: 1px 2px;
   border-radius: 4px;
 }
+
 .header>span.documents {
   background-color: rgba(70, 220, 40, 1);
 }

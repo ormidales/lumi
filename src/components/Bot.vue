@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Ball from './Ball.vue';
 import Card from './Card.vue';
 
-const isCardVisible = ref(true);
+const isCardVisible = ref(false);
 
 const toggleCardVisibility = () => {
   isCardVisible.value = !isCardVisible.value;

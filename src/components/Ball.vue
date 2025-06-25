@@ -1,5 +1,11 @@
 <template>
-  <div class="ball">✨</div>
+  <div class="ball">
+    <div class="eyes">
+      <div class="eye"></div>
+      <div class="eye"></div>
+    </div>
+    <div class="mouth"></div>
+  </div>
 </template>
 
 <style scoped>
@@ -15,17 +21,16 @@
   justify-content: center;
   background-color: rgba(50, 50, 50, 0.5);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
-  font-size: 48px;
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .ball:hover {
-  transform: scale(1.01);
+  transform: scale(1.1);
 }
 
 .ball:active {
-  transform: scale(0.99);
+  transform: scale(0.9);
 }
 </style>

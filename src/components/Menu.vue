@@ -38,7 +38,8 @@ import Button from './Button.vue';
   gap: 8px;
   border-radius: 8px;
 }
-.menu > div {
+
+.menu>div {
   width: 100%;
   display: flex;
   flex-direction: column;

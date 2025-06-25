@@ -38,14 +38,14 @@ const cardClass = computed(() => ({
   background-color: rgba(50, 50, 50, 0.4);
   backdrop-filter: blur(10px);
   border-radius: 16px;
-  transition: all 0.3s ease-in-out;
   opacity: 1;
   transform: translateY(0);
+  transition: all 0.3s ease-in-out;
 }
 
 .card.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(20px) translateY(20px);
+  transform: translateX(250px) translateY(300px) scale(0.05);
 }
 </style>

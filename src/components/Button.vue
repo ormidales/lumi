@@ -26,12 +26,12 @@
 }
 
 .button:hover {
-  transform: scale(1.01);
+  transform: scale(1.1);
   background-color: rgba(50, 50, 50, 0.8);
   color: rgba(255, 255, 255, 1);
 }
 
 .button:active {
-  transform: scale(0.99);
+  transform: scale(0.9);
 }
 </style>
