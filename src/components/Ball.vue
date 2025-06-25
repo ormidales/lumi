@@ -81,28 +81,20 @@ watch(() => props.isCardHovered, (isHovering) => {
   transition: all 0.3s ease-in-out;
 }
 
-.ball:hover .mouth {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 4px solid white;
-  background-color: transparent;
-}
-
 .ball:active {
   transform: scale(0.9);
 }
 
 .eyes {
   display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 8px;
 }
 
 .eye {
   width: 30px;
   height: 30px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -121,7 +113,7 @@ watch(() => props.isCardHovered, (isHovering) => {
 .mouth {
   width: 35px;
   height: 5px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 0 0 15px 15px;
   transition: all 0.2s ease-in-out;
 }
