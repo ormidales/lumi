@@ -12,7 +12,13 @@ const props = defineProps({
   },
 });
 
-const eyeStyle = ref({});
+const emit = defineEmits(['eye-click']);
+
+const leftEyeStyle = ref({});
+const rightEyeStyle = ref({});
+const isLeftEyeClosed = ref(false);
+const isRightEyeClosed = ref(false);
+
 const tooltipMessage = ref('');
 const showTooltip = ref(false);
 const isDizzy = ref(false);
@@ -30,23 +36,73 @@ const messages = [
   "N'hésitez pas à me solliciter.",
 ];
 
+const handleEyeClick = (eye) => {
+  if (eye === 'left') {
+    isLeftEyeClosed.value = true;
+    setTimeout(() => {
+      isLeftEyeClosed.value = false;
+    }, 300);
+  } else {
+    isRightEyeClosed.value = true;
+    setTimeout(() => {
+      isRightEyeClosed.value = false;
+    }, 300);
+  }
+  emit('eye-click');
+};
+
 const moveEyes = (event) => {
   if (props.isCardHovered || isDizzy.value) return;
 
   const ball = event.currentTarget;
   const rect = ball.getBoundingClientRect();
-  const centerX = rect.width / 2;
-  const centerY = rect.height / 2;
   const mouseX = event.clientX - rect.left;
   const mouseY = event.clientY - rect.top;
 
-  const x = (mouseX / rect.width - 0.5) * 25;
-  const y = (mouseY / rect.height - 0.5) * 25;
+  const leftEyeEl = ball.querySelector('.eye:first-child');
+  const rightEyeEl = ball.querySelector('.eye:last-child');
 
-  eyeStyle.value = {
-    transform: `translate(${x}px, ${y}px)`,
-    transition: 'transform 0.1s ease-out'
-  };
+  if (leftEyeEl && rightEyeEl) {
+    const leftRect = leftEyeEl.getBoundingClientRect();
+    const rightRect = rightEyeEl.getBoundingClientRect();
+
+    const leftCenterX = leftRect.left + leftRect.width / 2 - rect.left;
+    const leftCenterY = leftRect.top + leftRect.height / 2 - rect.top;
+    const rightCenterX = rightRect.left + rightRect.width / 2 - rect.left;
+    const rightCenterY = rightRect.top + rightRect.height / 2 - rect.top;
+
+    let leftX = (mouseX - leftCenterX) / 5;
+    let leftY = (mouseY - leftCenterY) / 5;
+    let rightX = (mouseX - rightCenterX) / 5;
+    let rightY = (mouseY - rightCenterY) / 5;
+
+    const maxMove = 7.5;
+
+    const distLeft = Math.sqrt(leftX * leftX + leftY * leftY);
+    if (distLeft > maxMove) {
+      leftX = (leftX / distLeft) * maxMove;
+      leftY = (leftY / distLeft) * maxMove;
+    }
+
+    const distRight = Math.sqrt(rightX * rightX + rightY * rightY);
+    if (distRight > maxMove) {
+      rightX = (rightX / distRight) * maxMove;
+      rightY = (rightY / distRight) * maxMove;
+    }
+
+    leftEyeStyle.value = {
+      transform: `translate(${leftX}px, ${leftY}px)`,
+      transition: 'transform 0.1s ease-out'
+    };
+    rightEyeStyle.value = {
+      transform: `translate(${rightX}px, ${rightY}px)`,
+      transition: 'transform 0.1s ease-out'
+    };
+  }
+
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
 
   const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
   if (lastAngle.value !== null) {
@@ -73,7 +129,11 @@ const moveEyes = (event) => {
 
 const resetEyesAndGesture = () => {
   if (props.isCardHovered) return;
-  eyeStyle.value = {
+  leftEyeStyle.value = {
+    transform: 'translate(0, 0)',
+    transition: 'transform 0.3s ease-in-out',
+  };
+  rightEyeStyle.value = {
     transform: 'translate(0, 0)',
     transition: 'transform 0.3s ease-in-out',
   };
@@ -124,7 +184,11 @@ watch(isDizzy, (newVal) => {
 
 watch(() => props.isCardHovered, (isHovering) => {
   if (isHovering) {
-    eyeStyle.value = {
+    leftEyeStyle.value = {
+      transform: 'translate(-10px, -10px)',
+      transition: 'transform 0.3s ease-in-out',
+    };
+    rightEyeStyle.value = {
       transform: 'translate(-10px, -10px)',
       transition: 'transform 0.3s ease-in-out',
     };
@@ -154,15 +218,15 @@ onUnmounted(() => {
     </div>
     <div class="ball" @mousemove="moveEyes" @mouseleave="resetEyesAndGesture" :class="{ 'dizzy': isDizzy }">
       <div class="eyes">
-        <div class="eye">
-          <div v-if="!isDizzy" class="pupil" :style="eyeStyle"></div>
+        <div class="eye" :class="{ 'closed': isLeftEyeClosed }" @click.stop="handleEyeClick('left')">
+          <div v-if="!isDizzy" class="pupil" :style="leftEyeStyle"></div>
           <div v-else class="dizzy-eye">
             <div class="dizzy-line1"></div>
             <div class="dizzy-line2"></div>
           </div>
         </div>
-        <div class="eye">
-          <div v-if="!isDizzy" class="pupil" :style="eyeStyle"></div>
+        <div class="eye" :class="{ 'closed': isRightEyeClosed }" @click.stop="handleEyeClick('right')">
+          <div v-if="!isDizzy" class="pupil" :style="rightEyeStyle"></div>
           <div v-else class="dizzy-eye">
             <div class="dizzy-line1"></div>
             <div class="dizzy-line2"></div>
@@ -260,6 +324,19 @@ onUnmounted(() => {
   justify-content: center;
   overflow: hidden;
   animation: blink 4s infinite ease-in-out;
+  position: relative;
+}
+
+.eye.closed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background: #2c3e50;
+  transform: translate(-50%, -50%);
+  border-radius: 1px;
 }
 
 .pupil {

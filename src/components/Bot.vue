@@ -13,6 +13,10 @@ const toggleCardVisibility = () => {
   isCardVisible.value = !isCardVisible.value;
 };
 
+const openCard = () => {
+  isCardVisible.value = true;
+};
+
 const handleClickOutside = (event) => {
   if (!isCardVisible.value) return;
 
@@ -37,7 +41,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Ball ref="ballRef" @click="toggleCardVisibility" :is-card-hovered="isCardHovered" :is-card-visible="isCardVisible" />
+  <Ball ref="ballRef" @click="toggleCardVisibility" @eye-click="openCard" :is-card-hovered="isCardHovered"
+    :is-card-visible="isCardVisible" />
   <Card ref="cardRef" :isVisible="isCardVisible" @mouseenter="isCardHovered = true"
     @mouseleave="isCardHovered = false" />
 </template>
